@@ -28,6 +28,7 @@ export class Wall {
     geometry.translate(0, this.config.height / 2, 0);
 
     const material = new THREE.ShaderMaterial({
+      // 定义了值，可以在顶点着色器和片元着色器中使用(变量传值)
       uniforms: {
         u_color: { value: new THREE.Color(this.config.color) },
         u_height: { value: this.config.height },
@@ -63,8 +64,9 @@ export class Wall {
         }
       `,
       transparent: true,
-      side: THREE.DoubleSide, // 解决只显示一半的问题
+      side: THREE.DoubleSide, // 默认单面显示，解决只显示一半的问题
       depthTest: false // 解决被建筑物遮挡的问题
+      // opacity:0.5   // 设置透明度
     });
 
     const mesh = new THREE.Mesh(geometry, material);
