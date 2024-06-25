@@ -4,7 +4,14 @@ import * as TWEEN from "@tweenjs/tween.js";
 import { SurroundLine } from "../effect/surroundLine.js";
 import { Background } from "../effect/background.js";
 import { Radar } from "../effect/radar.js";
-import { Wall } from "../effect/wall";
+import { Wall } from "../effect/wall.js";
+import { Circle } from "../effect/circle.js";
+import { Ball } from "../effect/ball.js";
+import { Cone } from "../effect/cone.js";
+import { Fly } from "../effect/fly.js";
+import { Road } from "../effect/road.js";
+import { Font } from "../effect/font.js";
+
 export class City {
   constructor(scene, camera) {
     this.scene = scene;
@@ -14,6 +21,10 @@ export class City {
     this.height = {
       value: 5
     };
+    this.top = {
+      value: 0
+    };
+    this.flag = false;
     this.time = {
       value: 0
     };
@@ -34,6 +45,12 @@ export class City {
     new Background(this.scene);
     new Radar(this.scene, this.time);
     new Wall(this.scene, this.time);
+    new Circle(this.scene, this.time);
+    new Ball(this.scene, this.time);
+    new Cone(this.scene, this.top, this.height);
+    new Fly(this.scene, this.time);
+    new Road(this.scene, this.time);
+    new Font(this.scene);
     // 添加点击选择
     this.addClick();
   }
@@ -113,5 +130,10 @@ export class City {
     if (this.height.value >= 100) {
       this.height.value = 5;
     }
+    if (this.top.value > 15 || this.top.value < 0) {
+      this.flag = !this.flag;
+    }
+    this.top.value += this.flag ? 0.6 : -0.6;
+    // 更新动画
   }
 }
